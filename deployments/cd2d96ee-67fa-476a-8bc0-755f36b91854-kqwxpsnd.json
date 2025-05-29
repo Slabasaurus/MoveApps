@@ -1,0 +1,8 @@
+{
+    "id":"cd2d96ee-67fa-476a-8bc0-755f36b91854-kqwxpsnd",
+    "name":"USG Test",
+    "sourceTenant":"y8qipobzg9tm2tu.us.qlikcloud.com",
+    "targetTenant":"m05vcgfd8dvob7a.us.qlikcloud.com",
+    "targetSpaceId":"680116024068b7173920701e",
+    "sourceAppId":"9fd9c404-9f8c-4909-8be7-5629e320e4b1"
+}
