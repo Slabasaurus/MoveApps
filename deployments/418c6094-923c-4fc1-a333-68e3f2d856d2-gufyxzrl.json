@@ -1,0 +1,8 @@
+{
+    "id":"418c6094-923c-4fc1-a333-68e3f2d856d2-gufyxzrl",
+    "name":"Accounts Receivable",
+    "sourceTenant":"y8qipobzg9tm2tu.us.qlikcloud.com",
+    "targetTenant":"m05vcgfd8dvob7a.us.qlikcloud.com",
+    "targetSpaceId":"680116024068b7173920701e",
+    "sourceAppId":"8855a4e4-fa10-4c4e-a33b-bace6a7dea52"
+}
