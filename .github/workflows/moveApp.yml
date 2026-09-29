@@ -98,6 +98,28 @@ jobs:
           -H "Accept: application/json"  | jq -r '.attributes.id')
           echo "IMPORTED_APP=$IMPORTED_APP" >> $GITHUB_ENV
           echo $IMPORTED_APP
+      - name: "Debug return automation config"
+        env:
+          RETURN_TOKEN: ${{ secrets.RETURN_AUTOMATION_TOKEN }}
+        run: |
+          echo "RETURN_AUTOMATION=${{ vars.RETURN_AUTOMATION }}"
+          echo -n "$RETURN_TOKEN" | wc -c
+
+      - name: "Send callback to automations"
+        run: |
+          AUTOMATION_RESPONSE=$(curl '${{ vars.RETURN_AUTOMATION }}' \
+          -X POST \
+          -s -o /dev/null -w "%{http_code}" \
+          -H 'X-Execution-Token: ${{ secrets.RETURN_AUTOMATION_TOKEN }}' \
+          --data-urlencode 'id=${{ env.id }}' \
+          --data-urlencode 'name=${{ env.name }}' \
+          --data-urlencode 'sourcetenant=${{ env.sourceTenant }}' \
+          --data-urlencode 'targettenant=${{ env.targetTenant }}' \
+          --data-urlencode 'targetspaceid=${{ env.targetSpaceId }}' \
+          --data-urlencode 'sourceappid=${{ env.sourceAppId }}' \
+          --data-urlencode 'newappid=${{ env.IMPORTED_APP }}')
+          echo "AUTOMATION_RESPONSE=$AUTOMATION_RESPONSE" >> $GITHUB_ENV
+
 
       - name: "Send callback to automations"
         run: |
