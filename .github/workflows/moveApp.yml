@@ -108,9 +108,10 @@ jobs:
 
       - name: "Send callback to automations"
         run: |
-          AUTOMATION_RESPONSE=$(curl '${{ vars.RETURN_AUTOMATION }}' \
+          RESPONSE=$(curl '${{ vars.RETURN_AUTOMATION }}' \
           -X POST \
-          -s -o /dev/null -w "%{http_code}" \
+          -sS \
+          -w '\nHTTP_STATUS:%{http_code}' \
           -H 'X-Execution-Token: ${{ secrets.RETURN_AUTOMATION_TOKEN }}' \
           --data-urlencode 'id=${{ env.id }}' \
           --data-urlencode 'name=${{ env.name }}' \
@@ -119,6 +120,10 @@ jobs:
           --data-urlencode 'targetspaceid=${{ env.targetSpaceId }}' \
           --data-urlencode 'sourceappid=${{ env.sourceAppId }}' \
           --data-urlencode 'newappid=${{ env.IMPORTED_APP }}')
+
+          echo "$RESPONSE"
+
+          AUTOMATION_RESPONSE=$(echo "$RESPONSE" | sed -n 's/^HTTP_STATUS://p' | tr -d '\r')
           echo "AUTOMATION_RESPONSE=$AUTOMATION_RESPONSE" >> $GITHUB_ENV
       
       - name: "Verify automation response code"
